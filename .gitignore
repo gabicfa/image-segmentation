@@ -40,3 +40,7 @@ Thumbs.db
 # Keys #
 ##############
 *.pem
+
+#Folders#
+###############
+build/

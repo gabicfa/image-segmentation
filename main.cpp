@@ -2,9 +2,8 @@
 #include <queue>
 #include <vector>
 #include <assert.h>
-#include <fstream>
-
 #include "imagem.h"
+#include <fstream>
 
 typedef std::pair<double, int> custo_caminho;
 

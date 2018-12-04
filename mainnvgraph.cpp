@@ -8,9 +8,6 @@
 #include <iostream>
 #include <cmath>
 
-#include <thrust/device_vector.h>
-#include <thrust/host_vector.h>
-
 #include "imagem.h"
 
 #define MAX(y,x) (y>x?y:x)
@@ -26,23 +23,6 @@ struct compare_custo_caminho {
         return c2.first < c1.first;
     }
 };
-
-__global__ void edge(unsigned char *in, unsigned char *out, int rowStart, int rowEnd, int colStart, int colEnd){
-    int i=blockIdx.x * blockDim.x + threadIdx.x;
-    int j=blockIdx.y * blockDim.y + threadIdx.y;
-    int di, dj;    
-    if (i< rowEnd && j< colEnd) {
-        int min = 256;
-        int max = 0;
-        for(di = MAX(rowStart, i - 1); di <= MIN(i + 1, rowEnd - 1); di++) {
-            for(dj = MAX(colStart, j - 1); dj <= MIN(j + 1, colEnd - 1); dj++) {
-               if(min>in[di*(colEnd-colStart)+dj]) min = in[di*(colEnd-colStart)+dj];
-               if(max<in[di*(colEnd-colStart)+dj]) max = in[di*(colEnd-colStart)+dj]; 
-            }
-        }
-        out[i*(colEnd-colStart)+j] = max-min;
-    }
-}
 
 
 result_sssp SSSP(imagem *img, int source) {
@@ -120,7 +100,6 @@ result_sssp SSSP(imagem *img, int source) {
     return res;
 }
 
-
 int main(int argc, char **argv) {
     if (argc < 3) {
         std::cout << "Uso:  segmentacao_sequencial entrada.pgm saida.pgm\n";
@@ -134,28 +113,44 @@ int main(int argc, char **argv) {
     int x, y;
     
     std::cin >> n_fg >> n_bg;
-    assert(n_fg == 1);
-    assert(n_bg == 1);
-    
-    std::cin >> x >> y;
-    int seed_fg = y * img->cols + x;
-    
-    std::cin >> x >> y;
-    int seed_bg = y * img->cols + x;
-    
-    
-    result_sssp fg = SSSP(img, seed_fg);
-    result_sssp bg = SSSP(img, seed_bg);
-    
+
+    cout << n_fg << '\n';
+    cout << n_bg << '\n';
+
+    std::vector<int> seeds_fg;
+
+    for (int i =0; i< n_fg; i++){
+        std::cin >> x >> y;
+        cout << x << y << '\n';
+        int seed_fg = y * img->cols + x;
+        cout << seed_fg << '\n';
+        seeds_fg.push_back(seed_fg);
+    }
+
+    std::vector<int> seeds_bg;
+    for (int i =0; i< n_bg; i++){
+        std::cin >> x >> y;
+        int seed_bg = y * img->cols + x;
+        seeds_bg.push_back(seed_bg);
+    }
+
     imagem *saida = new_image(img->rows, img->cols);
-    
-    for (int k = 0; k < saida->total_size; k++) {
-        if (fg.first[k] > bg.first[k]) {
-            saida->pixels[k] = 0;
-        } else {
-            saida->pixels[k] = 255;
+
+    for (int i=0; i< seeds_fg.size(); i++){
+        result_sssp fg = SSSP(img, seeds_fg[i]);
+        for(int j=0; j < seeds_bg.size(); j++){
+            result_sssp bg = SSSP(img, seeds_bg[j]);
+            for (int k = 0; k < saida->total_size; k++) {
+                if (fg.first[k] > bg.first[k]) {
+                    saida->pixels[k] = 0;
+                } else {
+                    saida->pixels[k] = 255;
+                }
+            }
         }
     }
+    
+    
     
     write_pgm(saida, path_output);    
     return 0;

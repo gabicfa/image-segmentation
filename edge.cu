@@ -36,6 +36,8 @@ int main() {
     imagem *img = read_pgm("mona.pgm");
     imagem *saida = new_image(img->rows, img->cols);
 
+    cout << "lida e saida" << '\n';
+
     thrust::device_vector<unsigned char> V1_d(img->pixels, img->pixels + img->total_size );
     thrust::device_vector<unsigned char> V2_d(saida->pixels, saida->pixels + saida->total_size );
     

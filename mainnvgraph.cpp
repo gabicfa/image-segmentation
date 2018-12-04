@@ -107,6 +107,7 @@ int main(int argc, char **argv) {
     }
     std::string path(argv[1]);
     std::string path_output(argv[2]);
+
     imagem *img = read_pgm(path);
     
     int n_fg, n_bg;
@@ -119,6 +120,7 @@ int main(int argc, char **argv) {
 
     std::vector<int> seeds_fg;
 
+    
     for (int i =0; i< n_fg; i++){
         std::cin >> x >> y;
         cout << x << y << '\n';

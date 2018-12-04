@@ -41,6 +41,3 @@ Thumbs.db
 ##############
 *.pem
 
-#Folders#
-###############
-build/

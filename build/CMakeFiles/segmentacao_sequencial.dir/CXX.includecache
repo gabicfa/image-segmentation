@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ubuntu/gabi/Projeto4/imagem.cpp
+imagem.h
+/home/ubuntu/gabi/Projeto4/imagem.h
+fstream
+-
+string
+-
+
+/home/ubuntu/gabi/Projeto4/imagem.h
+string
+-
+
+/home/ubuntu/gabi/Projeto4/mainnvgraph.cpp
+iostream
+-
+queue
+-
+vector
+-
+assert.h
+-
+imagem.h
+/home/ubuntu/gabi/Projeto4/imagem.h
+fstream
+-
+stdlib.h
+-
+iostream
+-
+cmath
+-
+imagem.h
+/home/ubuntu/gabi/Projeto4/imagem.h
+

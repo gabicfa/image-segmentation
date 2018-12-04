@@ -3,6 +3,6 @@ project(segmentacao_sequencial)
 
 set (CMAKE_CXX_STANDARD 11)
 
-add_executable(segmentacao_sequencial main.cpp imagem.cpp)
+add_executable(segmentacao_sequencial mainnvgraph.cpp imagem.cpp)
 
 install(TARGETS segmentacao_sequencial RUNTIME DESTINATION bin)

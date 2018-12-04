@@ -36,11 +36,13 @@ int main() {
     imagem *img = read_pgm("mona.pgm");
     imagem *saida = new_image(img->rows, img->cols);
 
+    cout << "lida e saida" << '\n';
+
     thrust::device_vector<unsigned char> V1_d(img->pixels, img->pixels + img->total_size );
     thrust::device_vector<unsigned char> V2_d(saida->pixels, saida->pixels + saida->total_size );
     
     dim3 dimGrid (ceil(img->rows/16), ceil(img->cols/16),1);
-    dim3 dimBlofck(16, 16, 1);
+    dim3 dimBlock(16, 16, 1);
 
     edge<<<dimGrid,dimBlock>>>(thrust::raw_pointer_cast(V1_d.data()), thrust::raw_pointer_cast(V2_d.data()), 0, img->rows, 0, img->cols);
 

@@ -4,6 +4,6 @@
 CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.o: ../imagem.cpp
 CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.o: ../imagem.h
 
-CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o: ../imagem.h
-CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o: ../mainnvgraph.cpp
+CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o: ../imagem.h
+CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o: ../mainSeqMult.cpp
 

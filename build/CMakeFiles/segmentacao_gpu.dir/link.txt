@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/segmentacao_gpu.dir/mainGPUMult.cpp.o CMakeFiles/segmentacao_gpu.dir/imagem.cpp.o  -o segmentacao_gpu -rdynamic -lnvgraph 

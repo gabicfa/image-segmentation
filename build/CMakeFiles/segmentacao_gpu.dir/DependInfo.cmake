@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/ubuntu/gabi/Projeto4/imagem.cpp" "/home/ubuntu/gabi/Projeto4/build/CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.o"
-  "/home/ubuntu/gabi/Projeto4/mainSeqMult.cpp" "/home/ubuntu/gabi/Projeto4/build/CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o"
+  "/home/ubuntu/gabi/Projeto4/imagem.cpp" "/home/ubuntu/gabi/Projeto4/build/CMakeFiles/segmentacao_gpu.dir/imagem.cpp.o"
+  "/home/ubuntu/gabi/Projeto4/mainGPUMult.cpp" "/home/ubuntu/gabi/Projeto4/build/CMakeFiles/segmentacao_gpu.dir/mainGPUMult.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

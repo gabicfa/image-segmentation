@@ -57,28 +57,28 @@ include CMakeFiles/segmentacao_sequencial.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/segmentacao_sequencial.dir/flags.make
 
-CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o: CMakeFiles/segmentacao_sequencial.dir/flags.make
-CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o: ../mainnvgraph.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/gabi/Projeto4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o -c /home/ubuntu/gabi/Projeto4/mainnvgraph.cpp
+CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o: CMakeFiles/segmentacao_sequencial.dir/flags.make
+CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o: ../mainSeqMult.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/gabi/Projeto4/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o -c /home/ubuntu/gabi/Projeto4/mainSeqMult.cpp
 
-CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/gabi/Projeto4/mainnvgraph.cpp > CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.i
+CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/gabi/Projeto4/mainSeqMult.cpp > CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.i
 
-CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/gabi/Projeto4/mainnvgraph.cpp -o CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.s
+CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/gabi/Projeto4/mainSeqMult.cpp -o CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.s
 
-CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o.requires:
+CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o.requires:
 
-.PHONY : CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o.requires
+.PHONY : CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o.requires
 
-CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o.provides: CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o.requires
-	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o.provides.build
-.PHONY : CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o.provides
+CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o.provides: CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o.requires
+	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o.provides.build
+.PHONY : CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o.provides
 
-CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o.provides.build: CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o
+CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o.provides.build: CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o
 
 
 CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.o: CMakeFiles/segmentacao_sequencial.dir/flags.make
@@ -107,13 +107,13 @@ CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.o.provides.build: CMakeFiles/se
 
 # Object files for target segmentacao_sequencial
 segmentacao_sequencial_OBJECTS = \
-"CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o" \
+"CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o" \
 "CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.o"
 
 # External object files for target segmentacao_sequencial
 segmentacao_sequencial_EXTERNAL_OBJECTS =
 
-segmentacao_sequencial: CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o
+segmentacao_sequencial: CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o
 segmentacao_sequencial: CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.o
 segmentacao_sequencial: CMakeFiles/segmentacao_sequencial.dir/build.make
 segmentacao_sequencial: CMakeFiles/segmentacao_sequencial.dir/link.txt
@@ -125,7 +125,7 @@ CMakeFiles/segmentacao_sequencial.dir/build: segmentacao_sequencial
 
 .PHONY : CMakeFiles/segmentacao_sequencial.dir/build
 
-CMakeFiles/segmentacao_sequencial.dir/requires: CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o.requires
+CMakeFiles/segmentacao_sequencial.dir/requires: CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o.requires
 CMakeFiles/segmentacao_sequencial.dir/requires: CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.o.requires
 
 .PHONY : CMakeFiles/segmentacao_sequencial.dir/requires

@@ -167,6 +167,19 @@ segmentacao_sequencial/fast:
 	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/build
 .PHONY : segmentacao_sequencial/fast
 
+#=============================================================================
+# Target rules for targets named segmentacao_gpu
+
+# Build rule for target.
+segmentacao_gpu: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 segmentacao_gpu
+.PHONY : segmentacao_gpu
+
+# fast build rule for target.
+segmentacao_gpu/fast:
+	$(MAKE) -f CMakeFiles/segmentacao_gpu.dir/build.make CMakeFiles/segmentacao_gpu.dir/build
+.PHONY : segmentacao_gpu/fast
+
 imagem.o: imagem.cpp.o
 
 .PHONY : imagem.o
@@ -174,6 +187,7 @@ imagem.o: imagem.cpp.o
 # target to build an object file
 imagem.cpp.o:
 	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.o
+	$(MAKE) -f CMakeFiles/segmentacao_gpu.dir/build.make CMakeFiles/segmentacao_gpu.dir/imagem.cpp.o
 .PHONY : imagem.cpp.o
 
 imagem.i: imagem.cpp.i
@@ -183,6 +197,7 @@ imagem.i: imagem.cpp.i
 # target to preprocess a source file
 imagem.cpp.i:
 	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.i
+	$(MAKE) -f CMakeFiles/segmentacao_gpu.dir/build.make CMakeFiles/segmentacao_gpu.dir/imagem.cpp.i
 .PHONY : imagem.cpp.i
 
 imagem.s: imagem.cpp.s
@@ -192,34 +207,62 @@ imagem.s: imagem.cpp.s
 # target to generate assembly for a file
 imagem.cpp.s:
 	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.s
+	$(MAKE) -f CMakeFiles/segmentacao_gpu.dir/build.make CMakeFiles/segmentacao_gpu.dir/imagem.cpp.s
 .PHONY : imagem.cpp.s
 
-mainnvgraph.o: mainnvgraph.cpp.o
+mainGPUMult.o: mainGPUMult.cpp.o
 
-.PHONY : mainnvgraph.o
+.PHONY : mainGPUMult.o
 
 # target to build an object file
-mainnvgraph.cpp.o:
-	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o
-.PHONY : mainnvgraph.cpp.o
+mainGPUMult.cpp.o:
+	$(MAKE) -f CMakeFiles/segmentacao_gpu.dir/build.make CMakeFiles/segmentacao_gpu.dir/mainGPUMult.cpp.o
+.PHONY : mainGPUMult.cpp.o
 
-mainnvgraph.i: mainnvgraph.cpp.i
+mainGPUMult.i: mainGPUMult.cpp.i
 
-.PHONY : mainnvgraph.i
+.PHONY : mainGPUMult.i
 
 # target to preprocess a source file
-mainnvgraph.cpp.i:
-	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.i
-.PHONY : mainnvgraph.cpp.i
+mainGPUMult.cpp.i:
+	$(MAKE) -f CMakeFiles/segmentacao_gpu.dir/build.make CMakeFiles/segmentacao_gpu.dir/mainGPUMult.cpp.i
+.PHONY : mainGPUMult.cpp.i
 
-mainnvgraph.s: mainnvgraph.cpp.s
+mainGPUMult.s: mainGPUMult.cpp.s
 
-.PHONY : mainnvgraph.s
+.PHONY : mainGPUMult.s
 
 # target to generate assembly for a file
-mainnvgraph.cpp.s:
-	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.s
-.PHONY : mainnvgraph.cpp.s
+mainGPUMult.cpp.s:
+	$(MAKE) -f CMakeFiles/segmentacao_gpu.dir/build.make CMakeFiles/segmentacao_gpu.dir/mainGPUMult.cpp.s
+.PHONY : mainGPUMult.cpp.s
+
+mainSeqMult.o: mainSeqMult.cpp.o
+
+.PHONY : mainSeqMult.o
+
+# target to build an object file
+mainSeqMult.cpp.o:
+	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o
+.PHONY : mainSeqMult.cpp.o
+
+mainSeqMult.i: mainSeqMult.cpp.i
+
+.PHONY : mainSeqMult.i
+
+# target to preprocess a source file
+mainSeqMult.cpp.i:
+	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.i
+.PHONY : mainSeqMult.cpp.i
+
+mainSeqMult.s: mainSeqMult.cpp.s
+
+.PHONY : mainSeqMult.s
+
+# target to generate assembly for a file
+mainSeqMult.cpp.s:
+	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.s
+.PHONY : mainSeqMult.cpp.s
 
 # Help Target
 help:
@@ -230,16 +273,20 @@ help:
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... segmentacao_sequencial"
 	@echo "... edit_cache"
+	@echo "... segmentacao_sequencial"
+	@echo "... segmentacao_gpu"
 	@echo "... install/strip"
 	@echo "... install/local"
 	@echo "... imagem.o"
 	@echo "... imagem.i"
 	@echo "... imagem.s"
-	@echo "... mainnvgraph.o"
-	@echo "... mainnvgraph.i"
-	@echo "... mainnvgraph.s"
+	@echo "... mainGPUMult.o"
+	@echo "... mainGPUMult.i"
+	@echo "... mainGPUMult.s"
+	@echo "... mainSeqMult.o"
+	@echo "... mainSeqMult.i"
+	@echo "... mainSeqMult.s"
 .PHONY : help
 
 

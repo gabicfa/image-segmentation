@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/segmentacao_sequencial.dir/mainnvgraph.cpp.o"
+  "CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o"
   "CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.o"
   "segmentacao_sequencial.pdb"
   "segmentacao_sequencial"

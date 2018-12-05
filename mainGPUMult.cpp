@@ -21,22 +21,22 @@ using namespace std;
 typedef std::pair<double, int> custo_caminho;
 typedef std::pair<double *, int *> result_sssp;
 
-__global__ void edge(unsigned char *in, unsigned char *out, int rowStart, int rowEnd, int colStart, int colEnd){
-    int i=blockIdx.x * blockDim.x + threadIdx.x;
-    int j=blockIdx.y * blockDim.y + threadIdx.y;
-    int di, dj;    
-    if (i< rowEnd && j< colEnd) {
-        int min = 256;
-        int max = 0;
-        for(di = MAX(rowStart, i - 1); di <= MIN(i + 1, rowEnd - 1); di++) {
-            for(dj = MAX(colStart, j - 1); dj <= MIN(j + 1, colEnd - 1); dj++) {
-               if(min>in[di*(colEnd-colStart)+dj]) min = in[di*(colEnd-colStart)+dj];
-               if(max<in[di*(colEnd-colStart)+dj]) max = in[di*(colEnd-colStart)+dj]; 
-            }
-        }
-        out[i*(colEnd-colStart)+j] = max-min;
-    }
-}
+// __global__ void edge(unsigned char *in, unsigned char *out, int rowStart, int rowEnd, int colStart, int colEnd){
+//     int i=blockIdx.x * blockDim.x + threadIdx.x;
+//     int j=blockIdx.y * blockDim.y + threadIdx.y;
+//     int di, dj;    
+//     if (i< rowEnd && j< colEnd) {
+//         int min = 256;
+//         int max = 0;
+//         for(di = MAX(rowStart, i - 1); di <= MIN(i + 1, rowEnd - 1); di++) {
+//             for(dj = MAX(colStart, j - 1); dj <= MIN(j + 1, colEnd - 1); dj++) {
+//                if(min>in[di*(colEnd-colStart)+dj]) min = in[di*(colEnd-colStart)+dj];
+//                if(max<in[di*(colEnd-colStart)+dj]) max = in[di*(colEnd-colStart)+dj]; 
+//             }
+//         }
+//         out[i*(colEnd-colStart)+j] = max-min;
+//     }
+// }
 
 struct compare_custo_caminho {
     bool operator()(custo_caminho &c1, custo_caminho &c2) {
@@ -156,23 +156,24 @@ int main(int argc, char **argv){
         seeds_bg.push_back(seed_bg);
     }
 
-    imagem *edge = new_image(img_ent->rows, img_ent->cols);
+    // imagem *edge = new_image(img_ent->rows, img_ent->cols);
 
-    thrust::device_vector<unsigned char> V1_d(img_ent->pixels, img_ent->pixels + img_ent->total_size );
-    thrust::device_vector<unsigned char> V2_d(edge->pixels, edge->pixels + edge->total_size );
+    // thrust::device_vector<unsigned char> V1_d(img_ent->pixels, img_ent->pixels + img_ent->total_size );
+    // thrust::device_vector<unsigned char> V2_d(edge->pixels, edge->pixels + edge->total_size );
     
-    dim3 dimGrid (ceil(img_ent->rows/16), ceil(img_ent->cols/16),1);
-    dim3 dimBlock(16, 16, 1);
+    // dim3 dimGrid (ceil(img_ent->rows/16), ceil(img_ent->cols/16),1);
+    // dim3 dimBlock(16, 16, 1);
 
-    edge<<<dimGrid,dimBlock>>>(thrust::raw_pointer_cast(V1_d.data()), thrust::raw_pointer_cast(V2_d.data()), 0, img_ent->rows, 0, img_ent->cols);
+    // edge<<<dimGrid,dimBlock>>>(thrust::raw_pointer_cast(V1_d.data()), thrust::raw_pointer_cast(V2_d.data()), 0, img_ent->rows, 0, img_ent->cols);
 
-    thrust::host_vector<unsigned char> V3_h(V2_d);
-    for(int i = 0; i != V3_h.size(); i++) {
-        edge->pixels[i] = V3_h[i];
-    }
-    write_pgm(edge, "edge.pgm");
+    // thrust::host_vector<unsigned char> V3_h(V2_d);
+    // for(int i = 0; i != V3_h.size(); i++) {
+    //     edge->pixels[i] = V3_h[i];
+    // }
+    // write_pgm(edge, "edge.pgm");
 
     // imagem *img = read_pgm("edge.pgm");
+
     // imagem *saida = new_image(img->rows, img->cols);
 
     // for (int i=0; i< seeds_fg.size(); i++){
@@ -189,7 +190,9 @@ int main(int argc, char **argv){
     //     }
     // }
     
-    // write_pgm(saida, path_output);    
+    // write_pgm(saida, path_output);
 
+    
+    
     return 0;
 }

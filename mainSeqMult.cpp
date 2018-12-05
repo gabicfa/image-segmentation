@@ -7,7 +7,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <cmath>
-
+#include <cuda_runtime.h>
+#include <nvgraph.h>
 #include "imagem.h"
 
 #define MAX(y,x) (y>x?y:x)

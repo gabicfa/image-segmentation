@@ -162,9 +162,9 @@ int main(int argc, char **argv) {
 
     for (int k = 0; k < saida->total_size; k++) {
         if (fg_final.first[k] > bg_final.first[k]) {
-            saida->pixels[k] = 0;
-        } else {
             saida->pixels[k] = 255;
+        } else {
+            saida->pixels[k] = 0;
         }
     }
         

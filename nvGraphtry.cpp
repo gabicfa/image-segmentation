@@ -4,8 +4,11 @@
 #include <curand.h>
 #include <curand_kernel.h>
 #include <iostream>
-
+#include <vector>
+#include <algorithm>
 #include "imagem.h"
+
+using namespace std;
 
 void check_status(nvgraphStatus_t status){
     if ((int)status != 0)
@@ -13,6 +16,95 @@ void check_status(nvgraphStatus_t status){
         printf("ERROR : %d\n",status);
         exit(0);
     }
+}
+
+struct info{
+    size_t n;
+    size_t nnz;
+    float * weights_h;
+    int * destination_offsets_h;
+    int * source_indices_h;
+    // int source_seed;
+};
+
+info imgInfo(imagem *in, vector<int>& seeds_fg, vector<int>& seeds_bg){
+    
+    int n_seeds = seeds_fg.size() + seeds_bg.size();
+
+    vector<int> src_indices;
+    vector<float> weights;
+    vector<int> dest_offsets={0};
+
+    info inf = {};
+
+    inf.n = in->total_size + 2;
+    inf.nnz = (2*((in->cols-1)*in->rows+(in->rows-1)*in->cols))+n_seeds;
+    int offset_count = 0;
+
+    for (int v = 0; v < in->total_size; v++) {
+
+        int v_i = v / in->cols;
+        int v_j = v % in->cols;
+
+        if (find(begin(seeds_fg), end(seeds_fg), v) != end(seeds_fg)) {
+            src_indices.push_back(in->total_size);
+            weights.push_back(0.0);
+            offset_count++;
+        }
+
+        if (find(begin(seeds_bg), end(seeds_bg), v) != end(seeds_bg)) {
+            src_indices.push_back(in->total_size+1);
+            weights.push_back(0.0);
+            offset_count++;
+        }
+
+        if (v_i > 0) {
+            int acima = v - in->cols;
+            src_indices.push_back(acima);
+            weights.push_back(get_edge(in, v, acima));
+            offset_count++;
+        }
+
+        if (v_i < in->rows - 1) {
+            int abaixo = v + in->cols;
+            src_indices.push_back(abaixo);
+            weights.push_back(get_edge(in, v, abaixo));
+            offset_count++;
+        }
+
+        if(v_j < in->cols - 1){
+            int direita = v + 1;
+            src_indices.push_back(direita);
+            weights.push_back(get_edge(in, v, direita));
+            offset_count++;
+        }
+
+        if (v_j > 0) {
+            int esquerda = v - 1;
+            src_indices.push_back(esquerda);
+            weights.push_back(get_edge(in, v, esquerda));
+            offset_count++;
+        }
+        
+        dest_offsets.push_back(offset_count);
+    }
+    
+    inf.source_indices_h = (int*) malloc(src_indices.size()*sizeof(int));
+    for (int i = 0; i < src_indices.size(); i++){
+        inf.source_indices_h[i] = src_indices[i];
+    }
+
+    inf.weights_h = (float*)malloc(weights.size()*sizeof(float));
+    for (int i = 0; i < weights.size(); i++){
+        inf.weights_h[i] = weights[i];
+    }
+
+    inf.destination_offsets_h = (int*) malloc(dest_offsets.size()*sizeof(int));
+    for (int i = 0; i < dest_offsets.size(); i++){
+        inf.destination_offsets_h[i] = dest_offsets[i];
+    }
+
+    return inf;
 }
 
 int GpuSSSP(float *weights_h, int *destination_offsets_h, int *source_indices_h, const size_t n, const size_t nnz, int source_seed, float *sssp_h) {
@@ -67,27 +159,36 @@ int GpuSSSP(float *weights_h, int *destination_offsets_h, int *source_indices_h,
     return 0;
 }
 
-struct info{
-    size_t n;
-    size_t nnz;
-    // float * weights_h;
-    // int * destination_offsets_h;
-    // int * source_indices_h;
-    // int source_seed;
-};
 
-info imgInfo(imagem *in){
-    info inf = {};
-    inf.n = in->total_size;
-    inf.nnz = 2*((in->cols-1)*in->rows+(in->rows-1)*in->cols);
-    return inf;
-}
 
 int main(int argc, char **argv) {
     
     imagem *img = read_pgm("small.pgm");
-    info inf = imgInfo(img);
-    std::cout << inf.n << '\n';
-    std::cout << inf.nnz << '\n';
+
+    int n_fg, n_bg;
+    int x, y;
+    
+    cin >> n_fg >> n_bg;
+
+    vector<int> seeds_fg;
+
+    
+    for (int i =0; i< n_fg; i++){
+        cin >> x >> y;
+        int seed_fg = y * img->cols + x;
+        seeds_fg.push_back(seed_fg);
+    }
+
+    vector<int> seeds_bg;
+    for (int i =0; i< n_bg; i++){
+        cin >> x >> y;
+        int seed_bg = y * img->cols + x;
+        seeds_bg.push_back(seed_bg);
+    }
+
+
+    info inf = imgInfo(img, seeds_fg, seeds_bg);
+
+
     return 0;
 }

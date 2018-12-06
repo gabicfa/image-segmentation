@@ -56,39 +56,6 @@ CMAKE_BINARY_DIR = /home/ubuntu/gabi/Projeto4/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
-
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -100,27 +67,16 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
 
-# Special rule for the target install/strip
-install/strip/fast: install/strip
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
 
-.PHONY : install/strip/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: install/local
-
-.PHONY : install/local/fast
+.PHONY : rebuild_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -154,139 +110,14 @@ depend:
 	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named segmentacao_sequencial
-
-# Build rule for target.
-segmentacao_sequencial: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 segmentacao_sequencial
-.PHONY : segmentacao_sequencial
-
-# fast build rule for target.
-segmentacao_sequencial/fast:
-	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/build
-.PHONY : segmentacao_sequencial/fast
-
-#=============================================================================
-# Target rules for targets named segmentacao_gpu
-
-# Build rule for target.
-segmentacao_gpu: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 segmentacao_gpu
-.PHONY : segmentacao_gpu
-
-# fast build rule for target.
-segmentacao_gpu/fast:
-	$(MAKE) -f CMakeFiles/segmentacao_gpu.dir/build.make CMakeFiles/segmentacao_gpu.dir/build
-.PHONY : segmentacao_gpu/fast
-
-imagem.o: imagem.cpp.o
-
-.PHONY : imagem.o
-
-# target to build an object file
-imagem.cpp.o:
-	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.o
-	$(MAKE) -f CMakeFiles/segmentacao_gpu.dir/build.make CMakeFiles/segmentacao_gpu.dir/imagem.cpp.o
-.PHONY : imagem.cpp.o
-
-imagem.i: imagem.cpp.i
-
-.PHONY : imagem.i
-
-# target to preprocess a source file
-imagem.cpp.i:
-	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.i
-	$(MAKE) -f CMakeFiles/segmentacao_gpu.dir/build.make CMakeFiles/segmentacao_gpu.dir/imagem.cpp.i
-.PHONY : imagem.cpp.i
-
-imagem.s: imagem.cpp.s
-
-.PHONY : imagem.s
-
-# target to generate assembly for a file
-imagem.cpp.s:
-	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.s
-	$(MAKE) -f CMakeFiles/segmentacao_gpu.dir/build.make CMakeFiles/segmentacao_gpu.dir/imagem.cpp.s
-.PHONY : imagem.cpp.s
-
-mainGPUMult.o: mainGPUMult.cpp.o
-
-.PHONY : mainGPUMult.o
-
-# target to build an object file
-mainGPUMult.cpp.o:
-	$(MAKE) -f CMakeFiles/segmentacao_gpu.dir/build.make CMakeFiles/segmentacao_gpu.dir/mainGPUMult.cpp.o
-.PHONY : mainGPUMult.cpp.o
-
-mainGPUMult.i: mainGPUMult.cpp.i
-
-.PHONY : mainGPUMult.i
-
-# target to preprocess a source file
-mainGPUMult.cpp.i:
-	$(MAKE) -f CMakeFiles/segmentacao_gpu.dir/build.make CMakeFiles/segmentacao_gpu.dir/mainGPUMult.cpp.i
-.PHONY : mainGPUMult.cpp.i
-
-mainGPUMult.s: mainGPUMult.cpp.s
-
-.PHONY : mainGPUMult.s
-
-# target to generate assembly for a file
-mainGPUMult.cpp.s:
-	$(MAKE) -f CMakeFiles/segmentacao_gpu.dir/build.make CMakeFiles/segmentacao_gpu.dir/mainGPUMult.cpp.s
-.PHONY : mainGPUMult.cpp.s
-
-mainSeqMult.o: mainSeqMult.cpp.o
-
-.PHONY : mainSeqMult.o
-
-# target to build an object file
-mainSeqMult.cpp.o:
-	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o
-.PHONY : mainSeqMult.cpp.o
-
-mainSeqMult.i: mainSeqMult.cpp.i
-
-.PHONY : mainSeqMult.i
-
-# target to preprocess a source file
-mainSeqMult.cpp.i:
-	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.i
-.PHONY : mainSeqMult.cpp.i
-
-mainSeqMult.s: mainSeqMult.cpp.s
-
-.PHONY : mainSeqMult.s
-
-# target to generate assembly for a file
-mainSeqMult.cpp.s:
-	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.s
-.PHONY : mainSeqMult.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... install"
-	@echo "... list_install_components"
-	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... segmentacao_sequencial"
-	@echo "... segmentacao_gpu"
-	@echo "... install/strip"
-	@echo "... install/local"
-	@echo "... imagem.o"
-	@echo "... imagem.i"
-	@echo "... imagem.s"
-	@echo "... mainGPUMult.o"
-	@echo "... mainGPUMult.i"
-	@echo "... mainGPUMult.s"
-	@echo "... mainSeqMult.o"
-	@echo "... mainSeqMult.i"
-	@echo "... mainSeqMult.s"
+	@echo "... rebuild_cache"
 .PHONY : help
 
 

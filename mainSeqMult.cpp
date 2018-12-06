@@ -7,8 +7,6 @@
 #include <stdlib.h>
 #include <iostream>
 #include <cmath>
-#include <cuda_runtime.h>
-#include <nvgraph.h>
 #include "imagem.h"
 
 #define MAX(y,x) (y>x?y:x)
@@ -54,8 +52,11 @@ result_sssp SSSP(imagem *img, int source) {
         double custo_atual = cm.first;
         assert(custo_atual == custos[vertex]);
 
-        int acima = vertex - img->cols;
-        if (acima >= 0) {
+        int vertex_i = vertex / img->cols;
+        int vertex_j = vertex % img->cols;
+        
+        if (vertex_i > 0) {
+            int acima = vertex - img->cols;
             double custo_acima = custo_atual + get_edge(img, vertex, acima);
             if (custo_acima < custos[acima]) {
                 custos[acima] = custo_acima;
@@ -64,8 +65,8 @@ result_sssp SSSP(imagem *img, int source) {
             }
         }
 
-        int abaixo = vertex + img->cols;
-        if (abaixo < img->total_size) {
+        if (vertex_i < img->rows - 1) {
+            int abaixo = vertex + img->cols;
             double custo_abaixo = custo_atual + get_edge(img, vertex, abaixo);
             if (custo_abaixo < custos[abaixo]) {
                 custos[abaixo] = custo_abaixo;
@@ -75,8 +76,8 @@ result_sssp SSSP(imagem *img, int source) {
         }
 
 
-        int direita = vertex + 1;
-        if (direita < img->total_size) {
+        if (vertex_j < img->cols - 1) {
+            int direita = vertex + 1;
             double custo_direita = custo_atual + get_edge(img, vertex, direita);
             if (custo_direita < custos[direita]) {
                 custos[direita] = custo_direita;
@@ -85,8 +86,8 @@ result_sssp SSSP(imagem *img, int source) {
             }
         }
 
-        int esquerda = vertex - 1;
-        if (esquerda >= 0) {
+        if (vertex_j > 0) {
+            int esquerda = vertex - 1;
             double custo_esquerda = custo_atual + get_edge(img, vertex, esquerda);
             if (custo_esquerda < custos[esquerda]) {
                 custos[esquerda] = custo_esquerda;
@@ -139,22 +140,34 @@ int main(int argc, char **argv) {
 
     imagem *saida = new_image(img->rows, img->cols);
 
-    for (int i=0; i< seeds_fg.size(); i++){
+    result_sssp fg_final = SSSP(img, seeds_fg[0]);
+    for (int i=1; i< seeds_fg.size(); i++){
         result_sssp fg = SSSP(img, seeds_fg[i]);
-        for(int j=0; j < seeds_bg.size(); j++){
-            result_sssp bg = SSSP(img, seeds_bg[j]);
-            for (int k = 0; k < saida->total_size; k++) {
-                if (fg.first[k] > bg.first[k]) {
-                    saida->pixels[k] = 0;
-                } else {
-                    saida->pixels[k] = 255;
-                }
+        for (int k = 0; k < saida->total_size; k++) {
+            if(fg_final.first[k]>fg.first[k]){
+                fg_final.first[k]=fg.first[k];
             }
         }
     }
-    
-    
-    
+
+    result_sssp bg_final = SSSP(img, seeds_bg[0]);
+    for (int i=1; i< seeds_bg.size(); i++){
+        result_sssp bg = SSSP(img, seeds_bg[i]);
+        for (int k = 0; k < saida->total_size; k++) {
+            if(bg_final.first[k]>bg.first[k]){
+                bg_final.first[k]=bg.first[k];
+            }
+        }
+    }
+
+    for (int k = 0; k < saida->total_size; k++) {
+        if (fg_final.first[k] > bg_final.first[k]) {
+            saida->pixels[k] = 0;
+        } else {
+            saida->pixels[k] = 255;
+        }
+    }
+        
     write_pgm(saida, path_output);    
     return 0;
 }

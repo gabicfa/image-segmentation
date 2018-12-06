@@ -1,7 +1,6 @@
 #include <thrust/device_vector.h>
 #include <thrust/host_vector.h>
 #include <iostream>
-
 #include <stdlib.h>
 #include <queue>
 #include <vector>
@@ -72,8 +71,11 @@ result_sssp SSSP(imagem *img, int source) {
         double custo_atual = cm.first;
         assert(custo_atual == custos[vertex]);
 
-        int acima = vertex - img->cols;
-        if (acima >= 0) {
+        int vertex_i = vertex / img->cols;
+        int vertex_j = vertex % img->cols;
+        
+        if (vertex_i > 0) {
+            int acima = vertex - img->cols;
             double custo_acima = custo_atual + get_edge(img, vertex, acima);
             if (custo_acima < custos[acima]) {
                 custos[acima] = custo_acima;
@@ -82,8 +84,8 @@ result_sssp SSSP(imagem *img, int source) {
             }
         }
 
-        int abaixo = vertex + img->cols;
-        if (abaixo < img->total_size) {
+        if (vertex_i < img->rows - 1) {
+            int abaixo = vertex + img->cols;
             double custo_abaixo = custo_atual + get_edge(img, vertex, abaixo);
             if (custo_abaixo < custos[abaixo]) {
                 custos[abaixo] = custo_abaixo;
@@ -93,8 +95,8 @@ result_sssp SSSP(imagem *img, int source) {
         }
 
 
-        int direita = vertex + 1;
-        if (direita < img->total_size) {
+        if (vertex_j < img->cols - 1) {
+            int direita = vertex + 1;
             double custo_direita = custo_atual + get_edge(img, vertex, direita);
             if (custo_direita < custos[direita]) {
                 custos[direita] = custo_direita;
@@ -103,8 +105,8 @@ result_sssp SSSP(imagem *img, int source) {
             }
         }
 
-        int esquerda = vertex - 1;
-        if (esquerda >= 0) {
+        if (vertex_j > 0) {
+            int esquerda = vertex - 1;
             double custo_esquerda = custo_atual + get_edge(img, vertex, esquerda);
             if (custo_esquerda < custos[esquerda]) {
                 custos[esquerda] = custo_esquerda;

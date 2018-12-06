@@ -4,5 +4,6 @@
 CMakeFiles/segmentacao_gpu.dir/imagem.cpp.o: ../imagem.cpp
 CMakeFiles/segmentacao_gpu.dir/imagem.cpp.o: ../imagem.h
 
+CMakeFiles/segmentacao_gpu.dir/mainGPUMult.cpp.o: ../imagem.h
 CMakeFiles/segmentacao_gpu.dir/mainGPUMult.cpp.o: ../mainGPUMult.cpp
 

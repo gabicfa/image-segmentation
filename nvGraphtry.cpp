@@ -107,7 +107,7 @@ info imgInfo(imagem *in, vector<int>& seeds_fg, vector<int>& seeds_bg){
     return inf;
 }
 
-int GpuSSSP(float *weights_h, int *destination_offsets_h, int *source_indices_h, const size_t n, const size_t nnz, int source_seed, float *sssp_h) {
+int GPUSSSP(float *weights_h, int *destination_offsets_h, int *source_indices_h, const size_t n, const size_t nnz, int source_seed, float *sssp_h) {
     const size_t vertex_numsets = 2, edge_numsets = 1;
     void** vertex_dim;
 
@@ -159,11 +159,16 @@ int GpuSSSP(float *weights_h, int *destination_offsets_h, int *source_indices_h,
     return 0;
 }
 
-
-
 int main(int argc, char **argv) {
-    
-    imagem *img = read_pgm("small.pgm");
+    if (argc < 3) {
+        std::cout << "Uso:  segmentacao_sequencial entrada.pgm saida.pgm\n";
+        return -1;
+    }
+
+    std::string path(argv[1]);
+    std::string path_output(argv[2]);
+
+    imagem *img = read_pgm(path);
 
     int n_fg, n_bg;
     int x, y;
@@ -189,6 +194,22 @@ int main(int argc, char **argv) {
 
     info inf = imgInfo(img, seeds_fg, seeds_bg);
 
+    float * sssp_fg = (float*)malloc(inf.n*sizeof(float));
+    GPUSSSP(inf.weights_h, inf.destination_offsets_h, inf.source_indices_h, inf.n, inf.nnz, img->total_size, sssp_fg);
 
+    info inf2 = imgInfo(img, seeds_fg, seeds_bg);
+    float * sssp_bg = (float*)malloc(inf.n*sizeof(float));
+    GPUSSSP(inf2.weights_h, inf2.destination_offsets_h, inf2.source_indices_h, inf2.n, inf2.nnz, img->total_size+1, sssp_bg);
+    // GPUSSSP(inf.weights_h, inf.destination_offsets_h, inf.source_indices_h, inf.n, inf.nnz, img->total_size, sssp_bg);
+
+    imagem *saida = new_image(img->rows, img->cols);
+    for (int k = 0; k < saida->total_size; k++) {
+        if (sssp_fg[k] > sssp_bg[k]) {
+            saida->pixels[k] = 0;
+        } else {
+            saida->pixels[k] = 255;
+        }
+    }
+    write_pgm(saida, path_output);    
     return 0;
 }

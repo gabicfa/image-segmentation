@@ -166,9 +166,9 @@ int GPUSSSP(float *weights_h, int *destination_offsets_h, int *source_indices_h,
     check_status(nvgraphSssp(handle, graph, 0,  &source_vert, 0));//retorna o sssp de todos os vertices ao source seed
     check_status(nvgraphGetVertexData(handle, graph, (void*)sssp_h, 0));
 
-    free(destination_offsets_h);
-    free(source_indices_h);
-    free(weights_h);
+    // free(destination_offsets_h);
+    // free(source_indices_h);
+    // free(weights_h);
     free(vertex_dim);
     free(vertex_dimT);
     free(CSC_input);
@@ -231,10 +231,8 @@ int main(int argc, char **argv) {
     float * sssp_fg = (float*)malloc(inf.n*sizeof(float));
     GPUSSSP(inf.weights_h, inf.destination_offsets_h, inf.source_indices_h, inf.n, inf.nnz, img->total_size, sssp_fg);
 
-    info inf2 = imgInfo(img, seeds_fg, seeds_bg);
     float * sssp_bg = (float*)malloc(inf.n*sizeof(float));
-    GPUSSSP(inf2.weights_h, inf2.destination_offsets_h, inf2.source_indices_h, inf2.n, inf2.nnz, img->total_size+1, sssp_bg);
-    // GPUSSSP(inf.weights_h, inf.destination_offsets_h, inf.source_indices_h, inf.n, inf.nnz, img->total_size, sssp_bg);
+    GPUSSSP(inf.weights_h, inf.destination_offsets_h, inf.source_indices_h, inf.n, inf.nnz, img->total_size+1, sssp_bg);
 
     imagem *saida = new_image(img->rows, img->cols);
     for (int k = 0; k < saida->total_size; k++) {

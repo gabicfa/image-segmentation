@@ -1,7 +1,0 @@
-/home/ubuntu/gabi/Projeto4/build/CMakeFiles/install.dir
-/home/ubuntu/gabi/Projeto4/build/CMakeFiles/list_install_components.dir
-/home/ubuntu/gabi/Projeto4/build/CMakeFiles/rebuild_cache.dir
-/home/ubuntu/gabi/Projeto4/build/CMakeFiles/segmentacao_sequencial.dir
-/home/ubuntu/gabi/Projeto4/build/CMakeFiles/edit_cache.dir
-/home/ubuntu/gabi/Projeto4/build/CMakeFiles/install/strip.dir
-/home/ubuntu/gabi/Projeto4/build/CMakeFiles/install/local.dir

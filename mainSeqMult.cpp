@@ -9,9 +9,6 @@
 #include <cmath>
 #include "imagem.h"
 
-#define MAX(y,x) (y>x?y:x)
-#define MIN(y,x) (y<x?y:x)
-
 typedef std::pair<double, int> custo_caminho;
 typedef std::pair<double *, int *> result_sssp;
 
@@ -22,7 +19,6 @@ struct compare_custo_caminho {
         return c2.first < c1.first;
     }
 };
-
 
 result_sssp SSSP(imagem *img, int source) {
     std::priority_queue<custo_caminho, std::vector<custo_caminho>, compare_custo_caminho > Q;

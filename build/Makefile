@@ -56,16 +56,27 @@ CMAKE_BINARY_DIR = /home/ubuntu/gabi/Projeto4/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
 
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
 
-.PHONY : edit_cache/fast
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
@@ -77,6 +88,39 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: install/strip
+
+.PHONY : install/strip/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: install/local
+
+.PHONY : install/local/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -110,14 +154,92 @@ depend:
 	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
+#=============================================================================
+# Target rules for targets named segmentacao_sequencial
+
+# Build rule for target.
+segmentacao_sequencial: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 segmentacao_sequencial
+.PHONY : segmentacao_sequencial
+
+# fast build rule for target.
+segmentacao_sequencial/fast:
+	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/build
+.PHONY : segmentacao_sequencial/fast
+
+imagem.o: imagem.cpp.o
+
+.PHONY : imagem.o
+
+# target to build an object file
+imagem.cpp.o:
+	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.o
+.PHONY : imagem.cpp.o
+
+imagem.i: imagem.cpp.i
+
+.PHONY : imagem.i
+
+# target to preprocess a source file
+imagem.cpp.i:
+	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.i
+.PHONY : imagem.cpp.i
+
+imagem.s: imagem.cpp.s
+
+.PHONY : imagem.s
+
+# target to generate assembly for a file
+imagem.cpp.s:
+	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/imagem.cpp.s
+.PHONY : imagem.cpp.s
+
+mainSeqMult.o: mainSeqMult.cpp.o
+
+.PHONY : mainSeqMult.o
+
+# target to build an object file
+mainSeqMult.cpp.o:
+	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.o
+.PHONY : mainSeqMult.cpp.o
+
+mainSeqMult.i: mainSeqMult.cpp.i
+
+.PHONY : mainSeqMult.i
+
+# target to preprocess a source file
+mainSeqMult.cpp.i:
+	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.i
+.PHONY : mainSeqMult.cpp.i
+
+mainSeqMult.s: mainSeqMult.cpp.s
+
+.PHONY : mainSeqMult.s
+
+# target to generate assembly for a file
+mainSeqMult.cpp.s:
+	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/mainSeqMult.cpp.s
+.PHONY : mainSeqMult.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... segmentacao_sequencial"
+	@echo "... edit_cache"
+	@echo "... install/strip"
+	@echo "... install/local"
+	@echo "... imagem.o"
+	@echo "... imagem.i"
+	@echo "... imagem.s"
+	@echo "... mainSeqMult.o"
+	@echo "... mainSeqMult.i"
+	@echo "... mainSeqMult.s"
 .PHONY : help
 
 

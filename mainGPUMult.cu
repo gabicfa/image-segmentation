@@ -182,7 +182,7 @@ int GPUSSSP(float *weights_h, int *destination_offsets_h, int *source_indices_h,
 
 int main(int argc, char **argv) {
     if (argc < 3) {
-        std::cout << "Uso:  segmentacao_sequencial entrada.pgm saida.pgm\n";
+        std::cout << "Uso: segmentacao_sequencial entrada.pgm saida.pgm\n";
         return -1;
     }
 
@@ -192,15 +192,12 @@ int main(int argc, char **argv) {
     imagem *in = read_pgm(path);
     imagem *img = new_image(in->rows, in->cols);
 
-
     int n_fg, n_bg;
     int x, y;
     
     cin >> n_fg >> n_bg;
 
     vector<int> seeds_fg;
-
-    
     for (int i =0; i< n_fg; i++){
         cin >> x >> y;
         int seed_fg = y * img->cols + x;

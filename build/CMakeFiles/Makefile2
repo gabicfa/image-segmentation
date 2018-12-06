@@ -60,6 +60,43 @@ CMAKE_SOURCE_DIR = /home/ubuntu/gabi/Projeto4
 CMAKE_BINARY_DIR = /home/ubuntu/gabi/Projeto4/build
 
 #=============================================================================
+# Target rules for target CMakeFiles/segmentacao_sequencial.dir
+
+# All Build rule for target.
+CMakeFiles/segmentacao_sequencial.dir/all:
+	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/depend
+	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/gabi/Projeto4/build/CMakeFiles --progress-num=1,2,3 "Built target segmentacao_sequencial"
+.PHONY : CMakeFiles/segmentacao_sequencial.dir/all
+
+# Include target in all.
+all: CMakeFiles/segmentacao_sequencial.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/segmentacao_sequencial.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/gabi/Projeto4/build/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/segmentacao_sequencial.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/gabi/Projeto4/build/CMakeFiles 0
+.PHONY : CMakeFiles/segmentacao_sequencial.dir/rule
+
+# Convenience name for target.
+segmentacao_sequencial: CMakeFiles/segmentacao_sequencial.dir/rule
+
+.PHONY : segmentacao_sequencial
+
+# clean rule for target.
+CMakeFiles/segmentacao_sequencial.dir/clean:
+	$(MAKE) -f CMakeFiles/segmentacao_sequencial.dir/build.make CMakeFiles/segmentacao_sequencial.dir/clean
+.PHONY : CMakeFiles/segmentacao_sequencial.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/segmentacao_sequencial.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
 # Special targets to cleanup operation of make.
 
 # Special rule to run CMake to check the build system integrity.

@@ -177,7 +177,7 @@ int main(int argc, char **argv) {
         img->pixels[i] = V3_h[i];
     }
 
-    write_pgm(img, "edge.pgm");
+    write_pgm(img, "output_images/edge.pgm");
 
     cudaEventRecord(start);
     result_sssp fg_final = SSSP(img, seeds_fg);
@@ -208,10 +208,12 @@ int main(int argc, char **argv) {
     float tempo_total;
     cudaEventElapsedTime(&tempo_total,startAll,stopAll);
     
-    cout << caminhos_minimos <<'\n';
-    cout << montagem_imagemSeg <<'\n';
-    cout << tempo_total << '\n';
-
+    ofstream myfile;
+    myfile.open ("out.txt");
+    myfile << caminhos_minimos <<'\n';
+    myfile << montagem_imagemSeg <<'\n';
+    myfile << tempo_total << '\n';
+    myfile.close();
     cudaEventDestroy(start);
     cudaEventDestroy(stop);
     cudaEventDestroy(startAll);

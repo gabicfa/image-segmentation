@@ -132,7 +132,6 @@ int GPUSSSP(float *weights_h, int *destination_offsets_h, int *source_indices_h,
     const size_t vertex_numsets = 2, edge_numsets = 1;
     void** vertex_dim;
 
-    // nvgraph variables
     nvgraphStatus_t status;
     nvgraphHandle_t handle;
     nvgraphGraphDescr_t graph;
@@ -140,7 +139,6 @@ int GPUSSSP(float *weights_h, int *destination_offsets_h, int *source_indices_h,
     cudaDataType_t edge_dimT = CUDA_R_32F;
     cudaDataType_t* vertex_dimT;
 
-    // Init host data
     vertex_dim  = (void**)malloc(vertex_numsets*sizeof(void*));
     vertex_dimT = (cudaDataType_t*)malloc(vertex_numsets*sizeof(cudaDataType_t));
     CSC_input = (nvgraphCSCTopology32I_t) malloc(sizeof(struct nvgraphCSCTopology32I_st));
@@ -156,24 +154,19 @@ int GPUSSSP(float *weights_h, int *destination_offsets_h, int *source_indices_h,
     CSC_input->destination_offsets = destination_offsets_h;
     CSC_input->source_indices = source_indices_h;
     
-    // Set graph connectivity and properties (tranfers)
     check_status(nvgraphSetGraphStructure(handle, graph, (void*)CSC_input, NVGRAPH_CSC_32));
     check_status(nvgraphAllocateVertexData(handle, graph, vertex_numsets, vertex_dimT));
     check_status(nvgraphAllocateEdgeData  (handle, graph, edge_numsets, &edge_dimT));
     check_status(nvgraphSetEdgeData(handle, graph, (void*)weights_h, 0));
     
-    int source_vert = source_seed; //source_seed
+    int source_vert = source_seed;
     check_status(nvgraphSssp(handle, graph, 0,  &source_vert, 0));//retorna o sssp de todos os vertices ao source seed
     check_status(nvgraphGetVertexData(handle, graph, (void*)sssp_h, 0));
 
-    // free(destination_offsets_h);
-    // free(source_indices_h);
-    // free(weights_h);
     free(vertex_dim);
     free(vertex_dimT);
     free(CSC_input);
     
-    //Clean 
     check_status(nvgraphDestroyGraphDescr (handle, graph));
     check_status(nvgraphDestroy (handle));
     
@@ -181,6 +174,13 @@ int GPUSSSP(float *weights_h, int *destination_offsets_h, int *source_indices_h,
 }
 
 int main(int argc, char **argv) {
+    cudaEvent_t start, stop, startAll, stopAll;
+    cudaEventCreate(&startAll);
+    cudaEventCreate(&stopAll);
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+
+    cudaEventRecord(startAll);
     if (argc < 3) {
         std::cout << "Uso: segmentacao_sequencial entrada.pgm saida.pgm\n";
         return -1;
@@ -211,13 +211,16 @@ int main(int argc, char **argv) {
         seeds_bg.push_back(seed_bg);
     }
 
+    cudaEventRecord(start);
     thrust::device_vector<unsigned char> V1_d(in->pixels, in->pixels + in->total_size );
     thrust::device_vector<unsigned char> V2_d(img->pixels, img->pixels + img->total_size );
 
     dim3 dimGrid (ceil(img->rows/16), ceil(img->cols/16),1);
     dim3 dimBlock(16, 16, 1);
 
+    
     edge<<<dimGrid,dimBlock>>>(thrust::raw_pointer_cast(V1_d.data()), thrust::raw_pointer_cast(V2_d.data()), 0, img->rows, 0, img->cols);
+    
 
     thrust::host_vector<unsigned char> V3_h(V2_d);
     for(int i = 0; i != V3_h.size(); i++) {
@@ -227,13 +230,24 @@ int main(int argc, char **argv) {
     write_pgm(img, "edge.pgm");
 
     info inf = imgInfo(img, seeds_fg, seeds_bg);
+    cudaEventRecord(stop);
+    cudaEventSynchronize(stop);
 
+    float montagem_grafo;
+    cudaEventElapsedTime(&montagem_grafo,start,stop);
+
+    cudaEventRecord(start);
     float * sssp_fg = (float*)malloc(inf.n*sizeof(float));
     GPUSSSP(inf.weights_h, inf.destination_offsets_h, inf.source_indices_h, inf.n, inf.nnz, img->total_size, sssp_fg);
 
     float * sssp_bg = (float*)malloc(inf.n*sizeof(float));
     GPUSSSP(inf.weights_h, inf.destination_offsets_h, inf.source_indices_h, inf.n, inf.nnz, img->total_size+1, sssp_bg);
+    cudaEventRecord(stop);
+    cudaEventSynchronize(stop);
+    float caminhos_minimos;
+    cudaEventElapsedTime(&caminhos_minimos,start,stop);
 
+    cudaEventRecord(start);
     imagem *saida = new_image(img->rows, img->cols);
     for (int k = 0; k < saida->total_size; k++) {
         if (sssp_fg[k] > sssp_bg[k]) {
@@ -242,6 +256,27 @@ int main(int argc, char **argv) {
             saida->pixels[k] = 255;
         }
     }
-    write_pgm(saida, path_output);    
+    cudaEventRecord(stop);
+    cudaEventSynchronize(stop);
+    float montagem_imagemSeg;
+    cudaEventElapsedTime(&montagem_imagemSeg,start,stop);
+
+    write_pgm(saida, path_output);
+
+    cudaEventRecord(stopAll);
+    cudaEventSynchronize(stopAll);
+    float tempo_total;
+    cudaEventElapsedTime(&tempo_total,startAll,stopAll);
+    
+    cout << montagem_grafo <<'\n';
+    cout << caminhos_minimos <<'\n';
+    cout << montagem_imagemSeg <<'\n';
+    cout << tempo_total << '\n';
+
+    cudaEventDestroy(start);
+    cudaEventDestroy(stop);
+    cudaEventDestroy(startAll);
+    cudaEventDestroy(stopAll);
+
     return 0;
 }

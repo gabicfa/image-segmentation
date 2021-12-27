@@ -1,4 +1,4 @@
-# image segmentation
+# Image segmentation
 
 For the fourth SuperComputing project, the concepts of GPGPU seen in class were applied to a real image segmentation problem. Image segmentation is its division into connected regions (without interruptions) containing objects of interest or the image's background. Iterative image segmentation is based on adding markers to objects of interest to differentiate them from the background (which contains all other objects and mage's background). 
 
@@ -46,3 +46,5 @@ python run.py
 ```
 
 the vectors will be written in the analysis.txt file
+
+Created at 2018.2
